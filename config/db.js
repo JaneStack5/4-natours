@@ -1,15 +1,11 @@
 const mongoose = require('mongoose');
 
-process.on('uncaughtException', err => {
-    console.log('UNCAUGHT EXCEPTION! Shutting down...');
-    console.log(err.name, err.message);
-        process.exit(1);
-})
+
 
 
 const connectDb = async () => {
 
-    const DB = process.env.DATABASE_URL_WRONG_CRED
+    const DB = process.env.DATABASE_URL
 
         const connect = await mongoose.connect(DB, {
             useNewUrlParser: true,
@@ -21,13 +17,10 @@ const connectDb = async () => {
         console.log(`DB CONNECTED: ${connect.connection.host}`)
     }
 
-    process.on('unhandledRejection', err => {
-        console.log('UNHANDELED REJECTION! Shutting down...');
-        console.log(err.name, err.message);
-        server.close(() => {
-            process.exit(1);
-        });
-    })
+
+
+
+
 
 
 

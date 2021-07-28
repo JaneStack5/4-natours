@@ -1,14 +1,18 @@
 const express = require('express')
 const userController = require('./../controllers/userController')
+const authController = require('./../controllers/authController')
 const fs = require('fs');
 
 
 const router = express.Router();
 
-router.param('id', (req, res, next, val) => {
+/*router.param('id', (req, res, next, val) => {
     console.log(`User id is: ${val}`);
     next();
-})
+})*/
+
+router.post('/signup', authController.signup);
+router.post('/login', authController.login);
 
 router
     .route('/')
