@@ -106,9 +106,10 @@ exports.protect = catchAsync(async (req, res, next) => {
         return next(
             new AppError('User recently changed password! Please log in again.', 401)
         );
-    };
+    }
  // Grant access to protected route
     req.user = freshUser;
+
     next()
 });
 
@@ -173,7 +174,7 @@ exports.forgotPassword = catchAsync( async(req, res, next) => {
     }
 })
 
-exports.resetPassword =catchAsync(async (req, res, next) => {
+ exports.resetPassword =catchAsync(async (req, res, next) => {
     // 1) Get user based on the token
 
 
@@ -205,6 +206,8 @@ exports.resetPassword =catchAsync(async (req, res, next) => {
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
     // 1) Get user from collection
+
+
     const user = await User.findById(req.user.id).select('+password');
 
     // 2) Check in posted current password is correct
