@@ -107,7 +107,6 @@ const tourSchema = new mongoose.Schema({
                 ref: 'User'
             }
         ]
-
     },
     {
         timestamps: true,
@@ -118,6 +117,14 @@ const tourSchema = new mongoose.Schema({
 tourSchema.virtual('durationWeeks').get(function () {
     return this.duration / 7;
 });
+
+//Virtual populate(populating the parent model)
+tourSchema.virtual('reviews', {
+    ref: 'Review',
+    foreignField: 'tour',
+    localField: '_id'
+});
+
 
 
 //Document Middleware: runs before .save() and .create() ! .insertMany()
