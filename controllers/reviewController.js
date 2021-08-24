@@ -1,11 +1,25 @@
 
 const catchAsync = require('./../utils/catchAsync');
 const Review = require('./../models/reviewModel');
+const factory = require('./handlerFactory')
 
 
-
+//@desc get a tours reviews
+// url api/v1/tours/:tourId/reviews
+// method GET
+// Public
 exports.getAllReviews = catchAsync( async (req, res, next) => {
-    const reviews = await Review.find();
+    let filter = {};
+
+    const {tourId} = req.params
+    const {} = req.body
+
+    //if (req.params.tourId) filter = { tour: req.params.tourId };
+    if (tourId) filter = { tour: tourId };
+
+    console.log(filter)
+
+    const reviews = await Review.find(filter);
     // query.sort().select().skip().limit()
 
     //SEND RESPONSE
@@ -52,3 +66,5 @@ exports.createReview = catchAsync(async (req, res, next) => {
         }
     });
 });
+
+exports.deleteReview = factory.deleteOne(Review);
