@@ -4,10 +4,7 @@ const mongoose = require('mongoose');
 const reviewSchema = new mongoose.Schema({
     review: {
         type: String,
-        required: [true, 'Review is required'],
-        minlength: [10, 'a review should have a minimum length of 10'],
-        maxlength: [40, 'a review should have a maximum length of 40']
-
+        required: [true, 'Review is required']
     },
     rating: {
         type: Number,
