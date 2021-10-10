@@ -13,20 +13,19 @@ const signToken = id => {
     });
 }
 
-const createSendToken = (user, statusCode, res) => {
+const createSendToken = (user, statusCode, req, res) => {
     const token = signToken(user.id);
 
-    const cookieOptions = {
+//remove password from output when created
+    res.cookie('jwt', token, {
         expires: new Date(
             Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
         ),
-        httpOnly: true
-    };
-    if (process.env.NODE_ENV === 'production') cookieOptions.secure = true
+        httponly: true,
+        secure: req.secure || req.headers('x-forwarded-proto') === 'https'
+    });
 
-//remove password from output when created
-    res.cookie('jwt', token, cookieOptions);
-
+    // Remove Password From Output
     user.password = undefined;
 
     res.status(statusCode).json({
@@ -58,7 +57,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     await new Email(newUser, data).sendWelcome();
 
 
-    createSendToken(newUser, 201, res)
+    createSendToken(newUser, 201, req, res)
 
 });
 
@@ -79,7 +78,7 @@ exports.login = catchAsync(async (req, res, next) => {
     }
 
     // 3) if everything is ok, send token to client
-    createSendToken(user, 202, res)
+    createSendToken(user, 202, req,res)
 });
 
 exports.protect = catchAsync(async (req, res, next) => {

@@ -18,6 +18,9 @@ const reviewRouter = require('./routes/reviewRoutes');
 
 const app = express();
 
+// trust proxy
+app.enable('trust proxy');
+
 // Global  Middlewares
 
 //Set security http headers
