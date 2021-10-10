@@ -6,6 +6,8 @@ const mongoSanitize = require('express-mongo-sanitize')
 const xss = require('xss-clean')
 const hpp = require('hpp')
 const path = require('path')
+const compression = require('compression')
+
 
 const AppError = require('./utils/appError')
 const globalErrorHandler = require('./controllers/errorController')
@@ -55,6 +57,8 @@ app.use(hpp({
         'price'
     ]
 }));
+
+app.use(compression());
 
 //regiser
 app.set('view engine', 'pug');
