@@ -4,12 +4,14 @@ const authController = require('./../controllers/authController')
 const fs = require('fs');
 
 
+
 const router = express.Router();
 
 /*router.param('id', (req, res, next, val) => {
     console.log(`User id is: ${val}`);
     next();
 })*/
+
 
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
@@ -32,7 +34,12 @@ router.get(
     userController.getUser
 );
 
-router.patch('/updateMe', userController.updateMe)
+router.patch(
+    '/updateMe',
+    userController.uploadUserPhoto,
+    userController.resizeUserPhoto,
+    userController.updateMe
+)
 router.delete('/deleteMe', userController.deleteme)
 
 router.use(authController.restrictTo('admin'))

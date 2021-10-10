@@ -5,12 +5,14 @@ const helmet = require('helmet')
 const mongoSanitize = require('express-mongo-sanitize')
 const xss = require('xss-clean')
 const hpp = require('hpp')
+const path = require('path')
 
 const AppError = require('./utils/appError')
 const globalErrorHandler = require('./controllers/errorController')
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+
 
 const app = express();
 
@@ -53,6 +55,11 @@ app.use(hpp({
         'price'
     ]
 }));
+
+//regiser
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views') )
+
 
 //Serving static files
 app.use(express.static(`${__dirname}/public`));
