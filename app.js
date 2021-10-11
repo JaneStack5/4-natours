@@ -7,6 +7,7 @@ const xss = require('xss-clean')
 const hpp = require('hpp')
 const path = require('path')
 const compression = require('compression')
+const cors = require('cors')
 
 
 const AppError = require('./utils/appError')
@@ -22,6 +23,14 @@ const app = express();
 app.enable('trust proxy');
 
 // Global  Middlewares
+
+//Implementing Cors
+// Access-control-Allow-Origin8
+app.use(cors());
+
+app.options('*', cors());
+//app.options('/api/v1/tours/:id', cors());
+
 
 //Set security http headers
 app.use(helmet())
